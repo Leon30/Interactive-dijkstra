@@ -29,9 +29,11 @@ import models.Node;
  */
 public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseListener{
     
-    public static final Color NODE_COLOR = new Color(7,16,19);
+//    public static final Color NODE_COLOR = new Color(7,16,19);
+    public static final Color NODE_COLOR = new Color(117,16,19);
     public static final Color EDGE_TEXT_COLOR = new Color(157,92,99);
-    public static final Color SELECTED_COLOR = Color.WHITE;
+    public static final Color SELECTED_COLOR = new Color(117,177,122);
+//    public static final Color SELECTED_COLOR = Color.WHITE;
     boolean grab=false;
     int grabbingX=-10;
     int grabbingY=-10;
