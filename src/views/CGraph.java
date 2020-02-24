@@ -6,26 +6,18 @@
 package views;
 
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.Stroke;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import models.Edge;
 import models.Label;
@@ -49,7 +41,7 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
     String lastName="";
     ArrayList<Point> nodePoints=new ArrayList<>();
     ArrayList<Point[]> edgesPoints = new ArrayList<>();//par de puntos de aristas
-    ArrayList<Edge> edges = new ArrayList<Edge>();
+    ArrayList<Edge> edges = new ArrayList<>();
     ArrayList<Double> dists = new ArrayList<>();
     ArrayList<Node<String>> nodes = new ArrayList<>();
     ArrayList<Boolean> selected = new ArrayList<>();
@@ -289,8 +281,8 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
         if(simMode){
             if(labels!=null && !labels.isEmpty()){
                 int i = currentLabel;
-                ArrayList<Label<String>> labels = this.labels.get(i);
-                for (Label<String> label : labels) {
+                ArrayList<Label<String>> labelsSimulation = this.labels.get(i);
+                for (Label<String> label : labelsSimulation) {
                     Node<String> n = label.getA();
                     Point p = searchNodePos(n.getInfo());
                     String labelText = "["+((label.getB()==null || label.getB().getInfo()==null)?"-":label.getB())+", "+(label.getDistance()==Double.MAX_VALUE?"inf":label.getDistance())+"] ("+label.getIteration()+")";
@@ -680,18 +672,16 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
         edges.clear();
         dists.clear();
         nodes.clear();
-        if(path!=null)path.clear();
+        if(path!=null) path.clear();
         selected.clear();
         repaint();
     }
 
     void clearPath() {
-        if(path != null && !path.isEmpty()){
-            path.clear();
-            pathMode=false;
-            currentLabel=0;
-            simMode=false;
-        }
+        if(path != null) path.clear();
+        pathMode=false;
+        currentLabel=0;
+        simMode=false;
     }
 
     void setPathListener(ActionListener actionListener) {
@@ -700,6 +690,5 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
 
     public ArrayList<Node<String>> getNodes() {
         return nodes;
-    }
-    
+    }   
 }

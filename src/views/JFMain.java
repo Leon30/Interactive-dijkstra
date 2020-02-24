@@ -7,18 +7,11 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ActionMap;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import models.Graph;
 import models.Node;
 
@@ -180,14 +172,8 @@ public class JFMain extends JFrame{
             Node<String> b = nodes[1];
             g = new Graph<>();
             g.setN(canvas.nodes);
-            //hacer dijkstra g,a,b
             g.printGraph();
             canvas.path=g.dijkstra(a.getInfo(), b.getInfo());
-            //dibujar el camino:
-//            canvas.path=new ArrayList<>();
-//            canvas.path.add("A");
-//            canvas.path.add("B");
-//            canvas.path.add("C");
             canvas.simMode(g.getSimLabels());
         });
         
@@ -260,11 +246,9 @@ public class JFMain extends JFrame{
         setSize(800, 600);
         setTitle("Dijkstra interactivo");
 //        this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-//        pack();
-        setVisible(true);
     }
     
     public static void main(String[] args) {
-        new JFMain();
+        new JFMain().setVisible(true);
     }
 }
