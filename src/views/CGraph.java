@@ -73,7 +73,9 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
     private boolean helpDispel = false;
     private boolean autoDispel = true;
     private String helpMess = "";
+    
     private int draggedNode = -1;
+    private Point draggedDif;
     
     private boolean pathMode=false;
     private boolean simMode=false;
@@ -262,8 +264,8 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
         Point mp = getMousePosition();
         if(draggedNode!=-1 && mp != null){
             Point p = nodePoints.get(draggedNode);
-            p.x=mp.x;
-            p.y=mp.y;
+            p.x=mp.x-draggedDif.x;
+            p.y=mp.y-draggedDif.y;
         }
         //paint nodes
         for (int i = 0; i < nodePoints.size(); i++) {
@@ -307,13 +309,11 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
         }
         //paint grabbed node
         if(grab){
-            System.out.println("------grab paint");
             drawNode(g, grabbingX, grabbingY,NODE_COLOR);
             drawCenteredHString(g,lastName, grabbingX, grabbingY-nodeDiam/2-4);
         }
         //paint help
         if(help){
-            //70-170
             if(helpDispel){
                 if(helpAlpha>5) helpAlpha-=5;
             }else{
@@ -378,19 +378,7 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        //mover nodo
-//        for (int i = 0; i < nodes.size(); i++) {
-//            if(draggedNode == -1 && checkInNode(i, e)){
-//                draggedNode=i;
-////                Point p = nodePoints.get(i);
-////                p.x=e.getX();
-////                p.y=e.getY();
-////                repaint();
-//                break;
-//            }else if(!checkInNode(i, e)){
-//                draggedNode=-1;
-//            }
-//        }
+        
     }
     
     public void setEdEdgAL(ActionListener al){
@@ -421,14 +409,14 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
 
     @Override
     public void mousePressed(MouseEvent e) {
+        clearPath();
         if(!edgeMode && e.getButton()==MouseEvent.BUTTON1){
             for (int i = 0; i < nodes.size(); i++) {
             if(draggedNode == -1 && checkInNode(i, e)){
                 draggedNode=i;
-//                Point p = nodePoints.get(i);
-//                p.x=e.getX();
-//                p.y=e.getY();
-//                repaint();
+                Point np = nodePoints.get(i);
+                Point mouseP = e.getPoint();
+                draggedDif=new Point(mouseP.x-np.x, mouseP.y-np.y);
                 break;
             }
         }
@@ -557,6 +545,7 @@ public class CGraph extends DoubleBuffer implements MouseMotionListener,MouseLis
     @Override
     public void mouseReleased(MouseEvent e) {
         draggedNode=-1;
+        draggedDif=null;
     }
     @Override
     public void mouseEntered(MouseEvent e) {}
